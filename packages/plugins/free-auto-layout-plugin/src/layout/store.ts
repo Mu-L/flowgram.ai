@@ -101,7 +101,7 @@ export class LayoutStore {
         position: { x: bounds.center.x, y: bounds.center.y },
         offset: { x: 0, y: 0 },
         size: { width: bounds.width, height: bounds.height },
-        hasChildren: node.collapsedChildren?.length > 0,
+        hasChildren: node.blocks?.length > 0,
       };
       return layoutNode;
     });

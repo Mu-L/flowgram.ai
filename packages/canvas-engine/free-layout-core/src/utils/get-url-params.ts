@@ -8,8 +8,18 @@ export function getUrlParams(): Record<string, string> {
     .replace(/^\?/, '')
     .split('&')
     .reduce((res: Record<string, string>, key) => {
+      if (!key) return res;
+
       const [k, v] = key.split('=');
-      res[k] = v;
+
+      // Prevent prototype pollution attack, filter dangerous attribute names
+      if (k === '__proto__' || k === 'constructor' || k === 'prototype') {
+        return res;
+      }
+
+      if (k) {
+        res[k] = v || '';
+      }
       return res;
-    }, {} satisfies Record<string, string>);
+    }, Object.create(null));
 }
